@@ -1,0 +1,109 @@
+package prakt5.z2;
+
+import java.awt.*;
+
+public class Circle extends Shape{
+    int rad;
+    public Circle(int x, int y, int r, Color color){
+        this.posy = y;
+        this.posx = x;
+        this.color = color;
+        this.rad = r;
+    }
+    public void draw(Graphics2D g){
+        g.setColor(color);
+        g.fillOval(posx, posy, rad*2, rad*2);
+    }
+}
+---------------------------------------------------
+package prakt5.z2;
+
+import javax.swing.*;
+
+public class FFrame extends JFrame {
+    FPanel panel;
+    FFrame(){
+        panel = new FPanel();
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.add(panel);
+        this.pack();
+        this.setVisible(true);
+    }
+}
+----------------------------------------------------
+package prakt5.z2;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Random;
+
+public class FPanel extends JPanel {
+    FPanel(){
+        this.setPreferredSize(new Dimension(900, 500));
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        Graphics2D gr = (Graphics2D) g;
+        Random rand = new Random();
+        for (int i = 0; i < 20; i++){
+            int rsh = rand.nextInt(2);
+            int r = rand.nextInt(255);
+            int gre = rand.nextInt(255);
+            int b = rand.nextInt(255);
+            int x = rand.nextInt(850);
+            int y = rand.nextInt(450);
+            Color color = new Color(r, gre, b);
+            switch (rsh){
+                case 0:
+                    Square square = new Square(x, y, rand.nextInt(50), color);
+                    square.draw(gr);
+                case 1:
+                    Circle circle = new Circle(x, y, rand.nextInt(50), color);
+                    circle.draw(gr);
+            }
+        }
+    }
+}
+-----------------------------------------------------------------------------------
+package prakt5.z2;
+
+import javax.swing.*;
+import java.awt.*;
+
+public abstract class Shape extends JPanel {
+    Color color;
+    int posy;
+    int posx;
+}
+------------------------------------------------
+package prakt5.z2;
+
+import java.awt.*;
+
+public class Square extends Shape {
+    int side;
+    public Square(int x, int y, int a, Color color){
+        this.posy = y;
+        this.posx = x;
+        this.color = color;
+        this.side = a;
+    }
+    public void draw(Graphics2D g){
+        g.setColor(color);
+        g.fillRect(posx, posy, side, side);
+    }
+}
+-----------------------------------------------------------
+package prakt5.z2;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Random;
+
+public class tester extends JPanel {
+    public static void main(String[] args) {
+        new FFrame();
+    }
+}
