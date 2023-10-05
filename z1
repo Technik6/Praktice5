@@ -1,0 +1,90 @@
+package prakt5;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class z1 {
+    static int milan = 0;
+    static int real = 0;
+    static String scorer;
+    static String Draw;
+    static JLabel lbl = new JLabel("Result: " + milan + " X " + real, JLabel.CENTER);
+    static JLabel last = new JLabel("\nLast Scorer: " + scorer, JLabel.RIGHT);
+    static JLabel winner = new JLabel("Winner: " + Draw, JLabel.LEFT);
+
+    public static void main(String args[]) {
+        String name;
+
+        JFrame frame = new JFrame("Таблица результатов матчей");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 400);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout()); // Используем BorderLayout для размещения сверху вниз
+
+        // Панель для вывода результатов
+        JPanel resultPanel = new JPanel();
+        resultPanel.setLayout(new BoxLayout(resultPanel, BoxLayout.Y_AXIS)); // Сверху вниз
+
+        resultPanel.add(lbl);
+        resultPanel.add(last);
+        resultPanel.add(winner);
+
+        // Панель для кнопок
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout()); // Внизу
+
+        JButton button1 = new JButton("Real Madrid");
+        JButton button = new JButton("AC Milan");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                milan++;
+                lbl.setText("Result: " + milan + " X " + real);
+                result();
+                if (scorer != null && Draw !=null){
+                    button.setEnabled(false);
+                    button1.setEnabled(false);
+                }
+            }
+        });
+
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                real++;
+                lbl.setText("Result: " + milan + " X " + real);
+                result();
+                if (scorer != null && Draw !=null){
+                    button.setEnabled(false);
+                    button1.setEnabled(false);
+                }
+            }
+        });
+
+        buttonPanel.add(button);
+        buttonPanel.add(button1);
+
+        // Добавляем обе панели на главную панель
+        panel.add(resultPanel, BorderLayout.NORTH);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+
+        frame.getContentPane().add(panel);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public static void result() {
+        if (real == milan - 3) {
+            scorer = "AC Milan";
+            Draw = "AC Milan";
+        } else if (milan == real - 3) {
+            scorer = "Real Madrid";
+            Draw = "Real Madrid";
+        }
+
+        last.setText("Last Scorer: " + scorer);
+        winner.setText("Winner: " + Draw);
+    }
+}
