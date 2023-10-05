@@ -1,0 +1,54 @@
+package prakt5;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+
+public class z4 {
+    public static void main(String[] args) {
+        new z4();
+    }
+    public z4(){
+        EventQueue.invokeLater(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | UnsupportedLookAndFeelException ex) {
+                    ex.printStackTrace();
+                }
+                JFrame frame = new JFrame("Gg");
+                frame.setPreferredSize(new Dimension(200, 200));
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.add(new FLabel());
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+    }
+    public class FLabel extends JLabel{
+        ImageIcon icon1 = new ImageIcon("C:\\Users\\radbu\\Downloads\\Пацан0.jpg");
+        int c = 2;
+
+
+        //private List<JLabel> fire = new ArrayList<>(15);
+
+        public FLabel(){
+            setIcon(icon1);
+            setOpaque(true);
+            Timer timer = new Timer(3000, new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    while (c < 30) {
+                        setIcon(new ImageIcon("C:\\Users\\radbu\\Downloads\\Пацан" + (c % 7) + ".jpg"));
+                        c++;
+                        if (c==27) c=0;
+                    }
+                }
+            });
+            timer.start();
+        }
+    }
+}
